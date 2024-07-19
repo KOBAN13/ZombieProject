@@ -33,6 +33,8 @@ namespace Aspects
             };
         }
 
+        public float3 Position => _localTransform.ValueRO.Position;
+
         public float ZombieSpawnTimer
         {
             get => _zombieSpawnTimer.ValueRO.timerSpawnZombie;
@@ -49,7 +51,7 @@ namespace Aspects
             return _graveyardRandom.ValueRW.Random.NextFloat2(new float2(0f, 0f), new float2(1f, 1f));
         }
 
-        public bool ZombieSpawnPointInit()
+        public bool SpawnPointInit()
         {
             return _zombieSpawnPoints.ValueRO.spawnPoint.IsCreated && ZombieSpawnPointCount > 0;
         }

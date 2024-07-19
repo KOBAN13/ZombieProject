@@ -1,4 +1,6 @@
 ﻿using Aspects;
+using ComponentsAndTags;
+using Helpers;
 using Unity.Burst;
 using Unity.Entities;
 
@@ -40,12 +42,15 @@ namespace Systems
         {
             graveyardAspect.ZombieSpawnTimer -= deltaTime;
             if(graveyardAspect.IsZombieSpawn == false) return;
-            if(graveyardAspect.ZombieSpawnPointInit() == false) return;
+            if(graveyardAspect.SpawnPointInit() == false) return;
 
             graveyardAspect.ZombieSpawnTimer = graveyardAspect.ZombieSpawnRate;
             var zombieInit = ecb.Instantiate(graveyardAspect.ZombiePrefab);
             var newZombieSpawnPoint = graveyardAspect.GetZombieSpawnPoint();
             ecb.SetComponent(zombieInit, newZombieSpawnPoint);
+
+            var zombieHeading = MathHelpers.GetHeading(newZombieSpawnPoint.Position, graveyardAspect.Position);
+            ecb.SetComponent(zombieInit, new ZombieHeading { angle = zombieHeading });
         }
     }
 }

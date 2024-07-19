@@ -43,6 +43,7 @@ namespace Systems
             
             zombieAspect.ZombieOnGround();
             ecb.RemoveComponent<ZombieRiseTime>(sortKey, zombieAspect.zombiePrefab);
+            ecb.SetComponentEnabled<ZombieWalkProperties>(sortKey, zombieAspect.zombiePrefab, true);
         }
     }
 

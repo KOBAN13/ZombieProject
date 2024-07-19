@@ -1,4 +1,5 @@
 ﻿using ComponentsAndTags;
+using Tags;
 using Unity.Entities;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace AuthoringAndMono
                 });
                 AddComponent(entity, new ZombieTimer());
                 AddComponent(entity, new ZombieHeading());
+                AddComponent(entity, new ZombieTag());
             }
         }
     }

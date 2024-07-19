@@ -1,9 +1,8 @@
 ﻿using Unity.Entities;
-using Unity.Mathematics;
 
 namespace ComponentsAndTags
 {
-    public struct ZombieWalkProperties : IComponentData
+    public struct ZombieWalkProperties : IComponentData, IEnableableComponent
     {
         public float walkSpeed;
         public float walkAmplitude;

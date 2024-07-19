@@ -1,5 +1,6 @@
 ﻿using ComponentsAndTags;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Aspects
 {
     public readonly partial struct ZombieWalkAspect : IAspect
     {
+        public readonly Entity zombiePrefab;
         private readonly RefRO<ZombieWalkProperties> _zombieWalkProperties;
         private readonly RefRW<ZombieTimer> _zombieTimer;
         private readonly RefRW<ZombieHeading> _zombieHeading;
@@ -22,10 +24,15 @@ namespace Aspects
             set => _zombieTimer.ValueRW.timer = value;
         }
 
+        public float3 ZombiePosition => _zombieTransform.ValueRW.Position;
+
         public void Walk(float deltaTime)
         {
             ZombieTimer += deltaTime;
             _zombieTransform.ValueRW.Position += _zombieTransform.ValueRW.Forward() * ZombieSpeed * deltaTime;
+
+            var swayAngle = ZombieAmplitude * math.sin(ZombieFrequency * ZombieTimer);
+            _zombieTransform.ValueRW.Rotation = quaternion.Euler(0f, _zombieHeading.ValueRO.angle, swayAngle);
         }
     }
 }
