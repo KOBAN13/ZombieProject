@@ -7,6 +7,7 @@ namespace AuthoringAndMono
     public class BrainMono : MonoBehaviour
     {
         [SerializeField] private float radiusBrain;
+        [SerializeField] private float brainHealth;
 
         private class BrainMonoBaker : Baker<BrainMono>
         {
@@ -14,7 +15,8 @@ namespace AuthoringAndMono
             {
                 Entity brain = GetEntity(TransformUsageFlags.Dynamic);
                 
-                AddComponent(brain, new BrainProperties { radiusBrain = authoring.radiusBrain });
+                AddComponent(brain, new BrainProperties { radiusBrain = authoring.radiusBrain, MaxHealth = authoring.brainHealth, Value = authoring.brainHealth });
+                AddBuffer<BrainDamageBufferElement>(brain);
             }
         }
     }

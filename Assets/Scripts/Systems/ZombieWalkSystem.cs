@@ -8,7 +8,8 @@ using Unity.Mathematics;
 namespace Systems
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(ZombieUpdateGroup), OrderLast = true)]
+    [UpdateAfter(typeof(ZombieRiseSystem))]
+    [UpdateInGroup(typeof(ZombieUpdateGroup))]
     public partial struct ZombieWalkSystem : ISystem
     {
         [BurstCompile]
@@ -43,6 +44,7 @@ namespace Systems
             if (math.distancesq(brainPosition, zombieWalkAspect.ZombiePosition) <= BrainProperties.radiusBrain)
             {
                 ecb.SetComponentEnabled<ZombieWalkProperties>(sortKey, zombieWalkAspect.zombiePrefab, false);
+                ecb.SetComponentEnabled<ZombieEatProperties>(sortKey, zombieWalkAspect.zombiePrefab, true);
             }
         }
     }

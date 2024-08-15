@@ -11,14 +11,16 @@ namespace Systems
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial struct InitializationZombieSystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
+        [BurstCompile]
+        public void OnUpdate(ref SystemState state)
         {
-            using var ecb = new EntityCommandBuffer(Allocator.Temp);
+            var ecb = new EntityCommandBuffer(Allocator.Temp);
 
             foreach (var zombie in SystemAPI.Query<ZombieAspect>().WithAll<ZombieTag>())
             {
                 ecb.RemoveComponent<ZombieTag>(zombie.zombiePrefab);
                 ecb.SetComponentEnabled<ZombieWalkProperties>(zombie.zombiePrefab, false);
+                ecb.SetComponentEnabled<ZombieEatProperties>(zombie.zombiePrefab, false);
             }
             ecb.Playback(state.EntityManager);
         }

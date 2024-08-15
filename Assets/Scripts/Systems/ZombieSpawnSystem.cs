@@ -7,7 +7,7 @@ using Unity.Entities;
 namespace Systems
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(ZombieUpdateGroup))]
+    [UpdateInGroup(typeof(ZombieUpdateGroup), OrderFirst = true)]
     public partial struct ZombieSpawnSystem : ISystem
     {
         [BurstCompile]

@@ -9,8 +9,11 @@ namespace AuthoringAndMono
     {
         [SerializeField] private float _zombieRiseTime;
         [SerializeField] private float walkSpeed;
-        [SerializeField] private float walkAmplitude;
+        [SerializeField] private float walkAmplitude; 
         [SerializeField] private float walkFrequency;
+        [SerializeField] private float zombieEatDamage;
+        [SerializeField] private float zombieEatAmplitude;
+        [SerializeField] private float zombieEatFrequency;
 
         private class ZombieMonoBaker : Baker<ZombieMono>
         {
@@ -26,6 +29,11 @@ namespace AuthoringAndMono
                 AddComponent(entity, new ZombieTimer());
                 AddComponent(entity, new ZombieHeading());
                 AddComponent(entity, new ZombieTag());
+                AddComponent(entity, new ZombieEatProperties 
+                    { zombieEatDamage = authoring.zombieEatDamage, 
+                        zombieEatFrequency = authoring.zombieEatFrequency,
+                        zombieEatAmplitude = authoring.walkAmplitude
+                    });
             }
         }
     }
